@@ -1,0 +1,90 @@
+scalar Upload
+
+type User {
+	id : Int
+    profileImageURL: String!
+    email: String!
+    nickname: String!
+    age: String!
+    gender: String!
+    loginId : String
+}
+
+type Review {
+	id : Int
+	text: String
+    author: String
+    storeName: String
+    imageURL: String
+    store: Store
+    user: User
+}
+
+type Menu {
+    id: Int!
+    name: String!
+    imageURL: String
+    description: String
+    disable: Boolean!
+}
+
+type Store {
+    id: Int!
+    name: String!
+    imageURL: String
+    address: String
+    ph: String
+    latitude:Float
+    longitude:Float
+    menus: [Menu]
+    reviews: [Review]
+}
+
+type QrCode {
+	user_id : Int!
+}
+
+# Root Query
+type Query {
+#    allUsers: [User]
+    getUserInfo(id: String!): User
+
+    # 소셜 id 계정이 이미 등록되어있는지 확인
+#   findUser(loginId : String!): User
+
+	findStore(name: String!) : Store
+
+    getAllStore: [Store]!
+    
+    getPoint(loginId : String!) : Int
+    
+
+}
+
+# Root Mutation
+type Mutation {
+    # 유저 정보를 db에 저장 (회원가입)
+    signUser( email: String!, nickname: String!, loginId: String!, age: String, gender:String, profileImageURL:String): Boolean!
+
+    # 가게 정보 저장
+    insertStore(name: String!, image: Upload, address: String, ph: String): Store!
+
+    # 메뉴 정보 저장
+    insertMenu(name: String!, image: Upload, description: String, disable: Boolean!, storeId: Int!): Boolean!
+
+    updateStore(id: Int!, name: String!, image: Upload, address: String, ph: String): Boolean!
+
+    updateMenu(id: Int, name: String!, image: Upload, description: String, disable: Boolean!, storeId: Int!): Boolean!
+
+    deleteStore(id: Int!): Boolean!
+
+    deleteMenu(id: Int!): Boolean!
+    
+    givePoint(loginId : String!) : Boolean	
+    
+    insertReview(text: String, reviewImage: Upload, storeId: Int!, loginId: String!): Review
+
+    # 이미지 파일을 저장
+#    saveImage(file: Upload!): User!
+
+}

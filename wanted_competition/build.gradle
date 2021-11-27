@@ -1,0 +1,119 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'jacoco'
+}
+
+group = 'com.social_ground'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '8'
+targetCompatibility = '8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+}
+
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    implementation 'org.springframework.retry:spring-retry:1.2.5.RELEASE'
+
+    // GrapthQL
+    implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:11.0.0'
+    implementation 'com.graphql-java-kickstart:graphiql-spring-boot-starter:11.0.0'
+    implementation 'com.graphql-java-kickstart:graphql-java-tools:11.0.0'
+    implementation 'com.google.guava:guava:26.0-jre'
+
+    // MongoDB
+//    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    // MySQL
+    implementation 'mysql:mysql-connector-java'
+
+    // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    // AWS S3
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
+
+    // AWS Rekognition
+    implementation 'com.amazonaws:aws-java-sdk-rekognition:1.11.303'
+
+    // OpenCV
+    implementation 'org.openpnp:opencv:4.5.1-2'
+
+    // coolsms
+    implementation 'net.nurigo:javaSDK:2.2'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy 'jacocoTestReport'
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled true
+        csv.enabled true
+        xml.enabled false
+    }
+
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+bootJar{
+    archivesBaseName = 'buildApp'
+    archiveFileName = 'buildApp.jar'
+    archiveVersion = "0.0.0"
+}
+
+//bootRun {
+//    String activeProfile = System.properties['spring.profiles.active']
+//    systemProperty "spring.profiles.active", activeProfile
+//}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+            element = 'CLASS'
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.60
+            }
+
+            excludes = []
+        }
+
+
+    }
+}
