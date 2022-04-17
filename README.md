@@ -20,7 +20,8 @@
 
 # 2. System Architecture
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f4bb65e5-3aa5-4151-8638-1aadeb2e5b99/Untitled.png)
+![image](https://user-images.githubusercontent.com/48385816/163705364-ac1ba8f2-65fc-4d07-a626-f8ad727ddc71.png)
+
 
 # 3. ER Diagram
 
